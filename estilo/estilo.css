@@ -1,0 +1,21 @@
+body, html {
+			height: 100%;
+			background-color:#ff9503;
+			color:white;
+			}
+            input{
+                margin-top:5px;
+                margin-bottom:5px;
+            }
+            .right{
+                float:right;
+            }
+			.bg { 
+ 
+                 /* Fondo de pantalla */
+                background-image: url("m109rx.jpg");
+                height: 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }

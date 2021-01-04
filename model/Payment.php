@@ -14,12 +14,22 @@ class Payment extends EntidadBase{
     private $registeredDate;
     private $isMatched;
     private $isActive;
+    private $fullname;
     
     public function __construct($adapter) {
         $table="payment";
         parent::__construct($table,$adapter);
     }
     
+    public function getFullname(){
+		return $this->fullname;
+	}
+
+	public function setFullname($fullname){
+		$this->fullname = $fullname;
+	}
+
+
     	public function getPaymentID(){
 		return $this->paymentID;
 	}
@@ -95,7 +105,7 @@ class Payment extends EntidadBase{
 
     //Registra una nueva moto (para un usuario)
     public function save(){
-        $query="INSERT INTO payment (\"transactionID\", value, cedula, bank, account, \"registeredDate\", \"isMatched\", \"isActive\")
+        $query="INSERT INTO payment (\"transactionID\", value, cedula, bank, account, \"registeredDate\", \"isMatched\", \"isActive\", \"fullname\")
                 VALUES(
                        '".$this->transactionID."',
                        '".$this->value."',
@@ -104,7 +114,8 @@ class Payment extends EntidadBase{
 					   '".$this->account."',
                        '".$this->registeredDate."',
                        '".$this->isMatched."',
-                       '".$this->isActive."');";
+                       '".$this->isActive."',
+                       '".$this->fullname."');";
         $save=$this->db()->query($query);
         //$this->db()->error;
         return $save;

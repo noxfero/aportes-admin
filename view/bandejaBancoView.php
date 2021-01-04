@@ -354,6 +354,7 @@
                     <th scope="col">Transacción</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Cédula</th>
+                    <th scope="col">Nombre</th>
                     <th scope="col">Banco</th>
                     <th scope="col">Cuenta Origen</th>
                     <th scope="col">Fecha Transacción</th>
@@ -378,7 +379,8 @@
 					
                     echo '<tr><th scope="row">'.$payment->transactionID.'</th>
                     <td>'.$payment->value.'</td>
-					<td>'.$payment->cedula.'</td>
+                    <td>'.$payment->cedula.'</td>
+                    <td>'.$payment->fullname.'</td>
                      <td>'.$payment->bank.'</td>
                      <td>'.$payment->account.'</td>
 					 <td>'.$payment->registeredDate.'</td>

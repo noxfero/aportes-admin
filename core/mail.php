@@ -40,8 +40,9 @@ $mail->IsHTML(true);
 
 $mail->Body = "Estimado ciudadano ".$nombreDestinatario.", le informamos se han validado satisfactoriamente sus datos y se ha verificado su aporte econ&oacute;mico al binomio Uni&oacute;n por la Esperanza.
 <br/><br/><br/>A continuaci&oacute;n debe imprimir y firmar la solicitud que ya contiene sus datos y est&aacute; disponible <strong><a href=\"https://aportes.andresarauz.ec/api/v1/pdf/formulario/".$aporteID."\">AQUI</a></strong>. 
-<br/><br/><br/>Una vez firmada, esta debe ser entregada en las sedes provinciales o cantonales del partido. 
-<br/><br/>Muchas gracias por su valioso aporte.";
+<br/><br/><br/>Una vez firmada, si le es posible entregue el formulario en las sedes cantonales o provinciales del partido m&aacute;s cercanas a usted. 
+<br/><br/>Caso contrario, por favor indicarnos respondiendo a este correo, para acercarnos a su domincilio u oficina para la suscripci&oacute;n del documento. 
+<br/><br/>Muchas gracias por su valioso aporte al binomio Uni&oacute;n por la Esperanza.";
 
 
 

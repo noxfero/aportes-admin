@@ -166,7 +166,8 @@ class BandejaBancosController extends ControladorBase{
 				$payment->setAccount($row[13]);
 				$payment->setRegisteredDate($fecha);
 				$payment->setIsMatched('false');
-				$payment->setIsActive('true');
+                $payment->setIsActive('true');
+                $payment->setFullname($row[11]);
 				$save=$payment->save();
 				}
 				catch (Exception $e) {

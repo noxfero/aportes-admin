@@ -23,7 +23,7 @@ if (isset($_POST['uploadBtn']))
     if (in_array($fileExtension, $allowedfileExtensions))
     {
       // directory in which the uploaded file will be moved
-      $uploadFileDir = './uploads/';
+      $uploadFileDir = 'uploads/';
       $dest_path = $uploadFileDir . $newFileName;
 
       if(move_uploaded_file($fileTmpPath, $dest_path)) 

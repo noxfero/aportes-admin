@@ -13,10 +13,19 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="./estilo/estilo.css">
-
-        <!-- Script con jQuery utilizado para agregar de manera dinámica N nuevas motocicletas"-->
+        
+        
+        
+        <!-- Script con jQuery utilizado para mantener la posición del scroll"-->
         <script type="text/javascript"> 
-		
+               $(document).ready(function () {
+                    if (localStorage.getItem("my_app_name_here-quote-scroll") != null) {
+                        $(window).scrollTop(localStorage.getItem("my_app_name_here-quote-scroll"));
+                    }
+                    $(window).on("scroll", function() {
+                        localStorage.setItem("my_app_name_here-quote-scroll", $(window).scrollTop());
+                    });
+                });
         </script>
     </head>
     <body>
@@ -34,11 +43,106 @@
 			
 			</div>
 		</div>
+        
+        <div class="col-sm-12">
+			<h3>BUSCADOR DE APORTANTES</h3> 
+            <hr/>
+            <div class="form-group"> 
+                     <!-- Formulario  cuyo post hará un llamado al controlador "BandejaUsers", con la acción "agregarMoto"--> 
+                     <form name="add_name" id="add_name" action="<?php echo $helper->url("BandejaAdmins","buscarAportante"); ?>" method="post"> 
+                     Ingrese el número de cédula
+                        <div class="table-responsive">  
+                               <table class="table" id="dynamic_field"> 
+                                    <!-- Listado de inputs necesarios para capturar la información de una nueva moto --> 
+                                    <tr>  
+                                         <td><input type="text" name="cedulaB" placeholder="1234567890" class="form-control name_list" /></td>
+                                        <td><input type="submit" class="btn btn-primary" name="submit" id="submit" class="btn btn-info" value="Buscar aportante" />  </td>
+                                    </tr> 
+                                    </table>
+                               <!-- Botón que ejecuta submit para este formulario"-->  
+                               
+                          </div>  
+
+                     </form> 
+                     <form action="<?php echo $helper->url("BandejaAdmins","buscarAportante2"); ?>" method="post" class="col-sm-12 justify-content-center">
+        <section class="col-sm-12 moto">
+            <?php 
+             //Carga el array que contiene MisCitas en una tabla siempre y cuando haya más de un registro
+			  
+             if (isset($allMisAportesX) && count($allMisAportesX)>=1)
+             {
+                echo '<table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Aporte</th>
+                    <th scope="col">Aportante</th>
+                    <th scope="col">Datos de contacto</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Banco</th>
+                    <th scope="col">Cuenta</th>
+                    <th scope="col">Transacción</th>
+                    <th scope="col">Fecha</th>
+					<th scope="col">Cruzada con el Banco</th>
+					<th scope="col">Solicitud enviada por correo</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>';
+				$editMode = false;
+                $thisId = "-1";
+				$idUpd = "0";
+				if(isset($_GET["datosx"]))
+                {
+                    $thisId = $_GET["idx"];
+                }
+				$display="block";
+				$dir =  $helper->url("BandejaCallcenters","index");
+                foreach($allMisAportesX as $aporte) {
+                    // Directorios usados para redireccionar
+                    $cedula = explode("-",$aporte->aportanteID);
+                    $ced = rtrim($cedula[0]);
+                    $visValidar = "inline";
+                    echo '<tr><th scope="row">'.$aporte->aporteID.'</th>
+                    <td>'.$aporte->aportanteID.'</td>
+                    <td>'.$aporte->type.'</td>
+					<td>'.$aporte->value.'</td>
+                     <td>'.$aporte->bank.'</td>
+                     <td>'.$aporte->account.'</td>
+                     <td>'.$aporte->transactionID.'</td>
+					 <td>'.$aporte->registeredDate.'</td>
+                     <td>'.$aporte->bankValidated.'</td>
+					 <td>'.$aporte->callCenterValidated.'</td>
+                    <td class="right">
+                    <a name="formulario" href="'.'https://aportes.andresarauz.ec/api/v1/pdf/formulario/'.$aporte->aporteID.'" class="btn btn-warning">Solicitud</a>
+                    <a name="cedula" href="'.'https://aportes.andresarauz.ec/api/v1/upload/download/cedula/'.$ced.'" class="btn btn-success">Cédula</a>
+					</td></tr>'; 
+                }
+                echo '</tbody>
+                </table>
+                <input  type="hidden" name="cedula" value="'.$ced.'"/>';
+            } else { 
+                if(isset($_POST["cedulaB"]))
+                {
+                    echo "La cédula que buscó no se encuentra en nuestros registros.<br/><br/>";
+                }
+            } 
+			
+            ?>
+        </section>
+		</form> 
+                </div>  
+        </div>
+
+        <br/>&nbsp;<br/>
+        <div class="col-sm-12">
+			<h3>Registro de Aportantes</h3> 
+            <hr/>
+        </div>
 		
 		<div class="form-group"> 
                      <!-- Formulario  cuyo post hará un llamado al controlador "BandejaUsers", con la acción "agregarMoto"--> 
                      <form name="add_name" id="add_name" action="<?php echo $helper->url("BandejaAdmins","agregaAportantes"); ?>" method="post">  
-                     Registre un nuevo aportante
+                     Nuevo aportante:
 
                           <div class="table-responsive">  
                                <table class="table" id="dynamic_field"> 

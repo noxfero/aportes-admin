@@ -135,7 +135,7 @@ class BandejaBancosController extends ControladorBase{
 		
 		if ($r > 0)
 		{
-			if ($row[5]!= 'Depósito')
+			if ($row[5]!= 'Depósito' && $row[5]!= 'Nota de Débito')
 			{
 				$fecha = substr($row[3], 0, 19) ;
 				$fecha = str_replace(".",":",$fecha);

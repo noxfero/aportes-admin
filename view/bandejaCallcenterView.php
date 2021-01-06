@@ -14,9 +14,16 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="./estilo/estilo.css">
 
-        <!-- Script con jQuery utilizado para agregar de manera dinámica N nuevas motocicletas"-->
-        <script type="text/javascript"> 
-		
+       <!-- Script con jQuery utilizado para mantener la posición del scroll"-->
+       <script type="text/javascript"> 
+               $(document).ready(function () {
+                    if (localStorage.getItem("my_app_name_here-quote-scroll") != null) {
+                        $(window).scrollTop(localStorage.getItem("my_app_name_here-quote-scroll"));
+                    }
+                    $(window).on("scroll", function() {
+                        localStorage.setItem("my_app_name_here-quote-scroll", $(window).scrollTop());
+                    });
+                });
         </script>
     </head>
     <body>

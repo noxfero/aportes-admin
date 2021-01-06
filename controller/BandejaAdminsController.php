@@ -27,10 +27,18 @@ class BandejaAdminsController extends ControladorBase{
         $allMisAportantes=$aportante->getAllofOneConEstado('"isActive"','1','"isActive"','1');
         $allMisAportes=$aporte->getMisAportes('"bankValidated"','0');
 
+        $cedB ="000";
+        if(isset($_POST["cedulaB"]))
+        {
+            $cedB = $_POST["cedulaB"];
+        }
+        $allMisAportesX=$aporte->getAportesPorCedula($cedB);
+
          //Cargamos la vista index y le pasamos valores
          $this->view("bandejaAdmin",array(
             "allMisAportantes"=>$allMisAportantes,
-            "allMisAportes"=>$allMisAportes
+            "allMisAportes"=>$allMisAportes,
+            "allMisAportesX"=>$allMisAportesX
         ));
         
     }

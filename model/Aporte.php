@@ -160,7 +160,7 @@ class Aporte extends EntidadBase{
 	
 	public function updateCruce(){
         //$query="UPDATE aporte SET value='$this->value', bank='$this->bank', account='$this->account', \"transactionId\"='$this->transactionID' WHERE \"aporteID\"='$this->aporteID'";
-		$query ="UPDATE aporte set  \"transactionId\"='$this->transactionID', \"bank\"='$this->bank', \"registeredDate\"='$this->registeredDate', \"bankValidated\"='true' WHERE \"account\"='$this->account' AND \"value\"='$this->value' AND \"bankValidated\"='false' AND \"callCenterValidated\"='false' AND \"transactionId\"= '0';";
+		$query ="UPDATE aporte set  \"transactionId\"='$this->transactionID', \"bank\"='$this->bank', \"registeredDate\"='$this->registeredDate', \"bankValidated\"='true' WHERE \"account\"='$this->account' AND \"value\"='$this->value' AND \"bankValidated\"='false' AND \"callCenterValidated\"='false' AND (\"transactionId\"= '0' OR \"transactionId\"='');";
         $save=$this->db()->query($query);
         //$this->db()->error;
         return $save;
@@ -214,6 +214,39 @@ aporte.bank, aporte.account, aporte.\"transactionId\" as \"transactionID\", apor
                 INNER JOIN aportante
                 ON aporte.\"aportanteID\" = aportante.\"aportanteID\"
 				WHERE ".$col." = '".$estado."' AND aporte.\"isActive\"='1' ORDER BY ".$order." DESC LIMIT 20 OFFSET ".$offset."
+				;");
+
+        while($row = $query->fetchObject()) {
+           $resultSet[]=$row;
+        }
+        if (!empty($resultSet))
+        {
+            return  $resultSet;
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+
+    //Obetiene las citas con estado dado el id de usuario 
+    public function getAportesPorCedula($cedula){
+        $query=$this->db()->query("SELECT aporte.\"aporteID\", 
+        aportante.cedula ||  ' - ' || aportante.names || ' ' || aportante.lastnames as \"aportanteID\", 
+        aportante.\"phoneHome\" ||  ' - ' || aportante.\"phoneMobile\" || ' - ' || aportante.email as \"type\", 
+        aporte.value,
+        aporte.bank, aporte.account, aporte.\"transactionId\" as \"transactionID\", aporte.\"registeredDate\",
+        CASE 
+        WHEN (aporte.\"bankValidated\" = 'true') THEN 'SI' 
+        WHEN (aporte.\"bankValidated\" = 'false') THEN 'AUN NO' ELSE 'N/A' END AS \"bankValidated\",
+		CASE 
+        WHEN (aporte.\"callCenterValidated\" = 'true') THEN 'SI' 
+        WHEN (aporte.\"callCenterValidated\" = 'false') THEN 'AUN NO' ELSE 'N/A' END AS \"callCenterValidated\",
+        aportante.email as \"isActive\"
+                FROM aporte
+                INNER JOIN aportante
+                ON aporte.\"aportanteID\" = aportante.\"aportanteID\"
+				WHERE aportante.cedula = '".$cedula."' AND aporte.\"isActive\"='1'
 				;");
 
         while($row = $query->fetchObject()) {

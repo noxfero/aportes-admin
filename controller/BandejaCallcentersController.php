@@ -208,21 +208,49 @@ class BandejaCallcentersController extends ControladorBase{
     public function editarAporte(){  
         if(isset($_POST["valueE"]) && isset($_POST["bankE"]) && isset($_POST["accountE"]))
         {
+            
 			$valx = "0";
-			if (isset($_POST["transactionE"]))
+			if (isset($_POST["transactionE"]) && (strlen(trim($_POST["transactionE"]))>=3))
 			{
 				$valx = $_POST["transactionE"];
-			}
-            $aporte=new Aporte($this->adapter);
-            $aporte->setAporteID($_POST["idxE"]);
-			$aporte->setValue($_POST["valueE"]);
-            $aporte->setBank($_POST["bankE"]);
-            $aporte->setAccount($_POST["accountE"]);
-            $aporte->setTransactionID($valx);
+            }
             
-            $save=$aporte->update(); // Manda a actualizar la moto en el modelo
-        }     
-        $this->redirect("BandejaCallcenters", "index");  // COntrolador + Vista
+            if((isset($_POST["idxE"]))&& (strlen(trim($_POST["valueE"]))>=1)
+            && (strlen(trim($_POST["bankE"]))>=3)
+            && (strlen(trim($_POST["accountE"]))>=3) 
+            )
+            {
+                $aporte=new Aporte($this->adapter);
+                $aporte->setAporteID($_POST["idxE"]);
+                $aporte->setValue($_POST["valueE"]);
+                $aporte->setBank($_POST["bankE"]);
+                $aporte->setAccount($_POST["accountE"]);
+                $aporte->setTransactionID($valx);
+                
+                $save=$aporte->update(); // Manda a actualizar la moto en el modelo
+                if ($save == TRUE)
+                    {
+                        $aporte->phpAlert("Aporte actualizado con éxito",$this->baseUrl("BandejaCallcenters", "index")); // Alerta y redirige
+                    }
+                    else
+                    {
+                        $aporte->phpAlert("Error con la actualización. Interente nuevamente",$this->baseUrl("BandejaCallcenters", "index")); // Alerta y redirige
+                        
+                    }  
+                
+            }
+            else
+                {
+                    $aportex = new Aportante($this->adapter);
+                    $aportex->phpAlert("Complete todos los campos para almacenar.",$this->baseUrl("BandejaCallcenters", "index")); // Alerta y redirige
+                }
+        }   
+        else
+        {
+            $aportex = new Aportante($this->adapter);
+            $aportex->phpAlert("Complete todos los campos para almacenar.",$this->baseUrl("BandejaCallcenters", "index")); // Alerta y redirige
+        }  
+        //$this->redirect("BandejaCallcenters", "index");  // COntrolador + Vista
     }
 
     //Demo de carga de Cita

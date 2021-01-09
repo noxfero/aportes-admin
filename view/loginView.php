@@ -60,7 +60,7 @@
                     <br/>
                     <!-- Botones para iniciar sesión o registrarse -->
                     <input type="submit" value="Ingresar" class="btn btn-primary" name="login" value="login"/>
-                     <!--<input type="submit" value="Registrarse" class="btn btn-info" name="registrar" value="registrar"/>-->
+                     <!--<input type="submit" value="Registrarse" class="btn btn-info" name="registrar" value="registrar"/> -->
                 </div>
                 <div class="col-sm-4"> 
 				</div>

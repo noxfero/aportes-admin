@@ -48,17 +48,25 @@ class BandejaAdminsController extends ControladorBase{
         session_start();
         $usrId= $_SESSION['miUserId'];
         $number = count($_POST["cedula"]);  
-        if($number > 0)  //Si hay al menos una moto
+        if($number > 0)  //Si hay al menos un aportante
         {  
             for($i=0; $i<$number; $i++)  // Para cada moto enviada en el array
             {  
-                if(trim($_POST["cedula"][$i] != ''))  // Si hay datos de la moto
+                if(
+                    (trim($_POST["cedula"][$i])) != '' && (strlen(trim($_POST["cedula"][$i]))==10) 
+                && (strlen(trim($_POST["names"][$i]))>=3) && (strlen(trim($_POST["lastnames"][$i]))>=2) 
+                && (strlen(trim($_POST["email"][$i]))>=5) && (strlen(trim($_POST["phoneMobile"][$i]))>=7) 
+                && (strlen(trim($_POST["addressCountry"][$i]))>=3) && (strlen(trim($_POST["addressProvince"][$i]))>=3) 
+                && (strlen(trim($_POST["addressCity"][$i]))>=3) && (strlen(trim($_POST["addressStreet"][$i]))>=3) 
+                && (strlen(trim($_POST["originProvince"][$i]))>=3) && (strlen(trim($_POST["originCity"][$i]))>=3) 
+
+                 )  
                 {  
                     $aportante=new Aportante($this->adapter);
                     $aportante->setCedula($_POST["cedula"][$i]);
                     $aportante->setNames($_POST["names"][$i]);
                     $aportante->setLastnames($_POST["lastnames"][$i]);
-                    $aportante->setType('N');
+                    $aportante->setType('C');
                     $aportante->setAddressCountry($_POST["addressCountry"][$i]);
 					$aportante->setAddressProvince($_POST["addressProvince"][$i]);
                     $aportante->setAddressCity($_POST["addressCity"][$i]);
@@ -72,18 +80,38 @@ class BandejaAdminsController extends ControladorBase{
                     
 					
                     $save=$aportante->save(); // Manda a guardar la moto en el modelo
-                }      
+                    if ($save == TRUE)
+                    {
+                        $aportante->phpAlert("Aportante creado con éxito",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+                    }
+                    else
+                    {
+                        $aportante->phpAlert("Error con el registro. Interente nuevamente",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+                        
+                    }  
+                }    
+                else
+                {
+                    $aportantez = new Aportante($this->adapter);
+                    $aportantez->phpAlert("Debe llenar todos los campos para poder guardar.",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+                }  
             }  
         }  
         else  
-        {   
+        {   $aportantex = new Aportante($this->adapter);
+            $aportantex->phpAlert("Ha enviados datos pero no se guardó.",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
         } 
-        $this->redirect("BandejaAdmins", "index");  // COntrolador + Vista
+        //$this->redirect("BandejaAdmins", "index");  // COntrolador + Vista
     }
 
     //Edita los datos de una moto   
     public function editarAportante(){  
-        if(isset($_POST["cedulaE"]))
+        if((isset($_POST["cedulaE"]))&& (strlen(trim($_POST["cedulaE"]))==10)
+        && (strlen(trim($_POST["namesE"]))>=3)
+        && (strlen(trim($_POST["lastnamesE"]))>=3) 
+        && (strlen(trim($_POST["phoneMobileE"]))>=7) 
+        && (strlen(trim($_POST["emailE"]))>=3) 
+        )
         {
             $aportante=new Aportante($this->adapter);
             $aportante->setAportanteID($_POST["idE"]);
@@ -94,8 +122,23 @@ class BandejaAdminsController extends ControladorBase{
 			$aportante->setPhoneMobile($_POST["phoneMobileE"]);
 			$aportante->setEmail($_POST["emailE"]);
             $save=$aportante->update(); // Manda a actualizar la moto en el modelo
+            if ($save == TRUE)
+                    {
+                        $aportante->phpAlert("Aportante actualizado con éxito",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+                    }
+                    else
+                    {
+                        $aportante->phpAlert("Error con la actualización. Interente nuevamente",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+                        
+                    }  
+        }
+        else
+        {
+            $aportantex = new Aportante($this->adapter);
+            $aportantex->phpAlert("Complete todos los campos para almacenar.",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
         }     
-        $this->redirect("BandejaAdmins", "index");  // COntrolador + Vista
+        
+        //$this->redirect("BandejaAdmins", "index");  // COntrolador + Vista
     }
 	
 	
@@ -104,20 +147,46 @@ class BandejaAdminsController extends ControladorBase{
         if(isset($_POST["valueE"]) && isset($_POST["bankE"]) && isset($_POST["accountE"]))
         {
 			$valx = "0";
-			if (isset($_POST["transactionE"]))
+			if (isset($_POST["transactionE"]) && (strlen(trim($_POST["transactionE"]))>=3))
 			{
 				$valx = $_POST["transactionE"];
-			}
-            $aporte=new Aporte($this->adapter);
-            $aporte->setAporteID($_POST["idxE"]);
-			$aporte->setValue($_POST["valueE"]);
-            $aporte->setBank($_POST["bankE"]);
-            $aporte->setAccount($_POST["accountE"]);
-            $aporte->setTransactionID($valx);
+            }
+            if((isset($_POST["idxE"]))&& (strlen(trim($_POST["valueE"]))>=1)
+            && (strlen(trim($_POST["bankE"]))>=3)
+            && (strlen(trim($_POST["accountE"]))>=3) 
+            )
+            {
+                $aporte=new Aporte($this->adapter);
+                $aporte->setAporteID($_POST["idxE"]);
+			    $aporte->setValue($_POST["valueE"]);
+                $aporte->setBank($_POST["bankE"]);
+                $aporte->setAccount($_POST["accountE"]);
+                $aporte->setTransactionID($valx);
             
-            $save=$aporte->update(); // Manda a actualizar la moto en el modelo
-        }     
-        $this->redirect("BandejaAdmins", "index");  // COntrolador + Vista
+                $save=$aporte->update(); // Manda a actualizar la moto en el modelo
+                if ($save == TRUE)
+                    {
+                        $aporte->phpAlert("Aporte actualizado con éxito",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+                    }
+                    else
+                    {
+                        $aporte->phpAlert("Error con la actualización. Interente nuevamente",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+                        
+                    }  
+
+            }
+            else
+            {
+                $aportex = new Aportante($this->adapter);
+                $aportex->phpAlert("Complete todos los campos para almacenar.",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+            }
+        }
+        else
+            {
+                $aportex = new Aportante($this->adapter);
+                $aportex->phpAlert("Complete todos los campos para almacenar.",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+            }     
+        //$this->redirect("BandejaAdmins", "index");  // COntrolador + Vista
     }
 
     //Demo de carga de Cita
@@ -138,30 +207,45 @@ class BandejaAdminsController extends ControladorBase{
         $aporte=new Aporte($this->adapter);
         if(isset($_POST["aportanteID"]) && !empty($_POST["aportanteID"])){ // Si hay datos
             if(isset($_POST["value"]) && isset($_POST["account"]) && isset($_POST["bank"])){
-                //Creamos un usuario
-                       
-                $aporte->setAportanteID($_POST["aportanteID"]);
-                $aporte->setValue($_POST["value"]);
-                $aporte->setType('1');
-                $aporte->setBank($_POST["bank"]);
-				$aporte->setAccount($_POST["account"]);
-				$aporte->setTransactionID('0');
-				$aporte->setRegisteredDate(date("Y-m-d H:i:s", time()));
-				$aporte->setBankValidated('false');
-				$aporte->setCallCenterValidated('false');
-				$aporte->setIsPdfGenerated('false');
-				$aporte->setIsActive('true');
-                $save=$aporte->save(); // Manda a guardar una cita en el modelo
-                if ($save == TRUE)
+                //Creamos un paorte
+                 
+                if((isset($_POST["aportanteID"]))&& (strlen(trim($_POST["value"]))>=1)
+                && (strlen(trim($_POST["bank"]))>=3)
+                && (strlen(trim($_POST["account"]))>=3) 
+                )
                 {
-                    $aporte->phpAlert("Aporte creado con éxito",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
-                }
-                else
-                {
-                    $aporte->phpAlert("Error con el registro. Interente nuevamente",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
-                    
-                }
+                    $aporte->setAportanteID($_POST["aportanteID"]);
+                    $aporte->setValue($_POST["value"]);
+                    $aporte->setType('T');
+                    $aporte->setBank($_POST["bank"]);
+                    $aporte->setAccount($_POST["account"]);
+                    $aporte->setTransactionID('0');
+                    $aporte->setRegisteredDate(date("Y-m-d H:i:s", time()));
+                    $aporte->setBankValidated('false');
+                    $aporte->setCallCenterValidated('false');
+                    $aporte->setIsPdfGenerated('false');
+                    $aporte->setIsActive('true');
+                    $save=$aporte->save(); // Manda a guardar una cita en el modelo
+                    if ($save == TRUE)
+                    {
+                        $aporte->phpAlert("Aporte creado con éxito",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+                    }
+                    else
+                    {
+                        $aporte->phpAlert("Error con el registro. Interente nuevamente",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+                        
+                    }
+            }
+            else{
+                $aportex = new Aportante($this->adapter);
+            $aportex->phpAlert("Complete todos los campos para almacenar.",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
+            }
+            
                 
+            }
+            else{
+                $aportex = new Aportante($this->adapter);
+            $aportex->phpAlert("Complete todos los campos para almacenar.",$this->baseUrl("BandejaAdmins", "index")); // Alerta y redirige
             }
 
         }

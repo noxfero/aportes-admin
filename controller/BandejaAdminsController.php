@@ -43,7 +43,7 @@ class BandejaAdminsController extends ControladorBase{
         
     }
     
-    //Registra N motos pasados desde el contendeor dinámico de la vista mediante arrays
+    //Registra N aportes pasados desde el contendeor dinámico de la vista mediante arrays
     public function agregaAportantes(){
         session_start();
         $usrId= $_SESSION['miUserId'];
@@ -63,20 +63,20 @@ class BandejaAdminsController extends ControladorBase{
                  )  
                 {  
                     $aportante=new Aportante($this->adapter);
-                    $aportante->setCedula($_POST["cedula"][$i]);
-                    $aportante->setNames($_POST["names"][$i]);
-                    $aportante->setLastnames($_POST["lastnames"][$i]);
+                    $aportante->setCedula(trim($_POST["cedula"][$i]));
+                    $aportante->setNames(trim($_POST["names"][$i]));
+                    $aportante->setLastnames(trim($_POST["lastnames"][$i]));
                     $aportante->setType('C');
-                    $aportante->setAddressCountry($_POST["addressCountry"][$i]);
-					$aportante->setAddressProvince($_POST["addressProvince"][$i]);
-                    $aportante->setAddressCity($_POST["addressCity"][$i]);
-                    $aportante->setAddressStreet($_POST["addressStreet"][$i]);
-                    $aportante->setPhoneHome($_POST["phoneHome"][$i]);
-					$aportante->setPhoneMobile($_POST["phoneMobile"][$i]);
-                    $aportante->setEmail($_POST["email"][$i]);
+                    $aportante->setAddressCountry(trim($_POST["addressCountry"][$i]));
+					$aportante->setAddressProvince(trim($_POST["addressProvince"][$i]));
+                    $aportante->setAddressCity(trim($_POST["addressCity"][$i]));
+                    $aportante->setAddressStreet(trim($_POST["addressStreet"][$i]));
+                    $aportante->setPhoneHome(trim($_POST["phoneHome"][$i]));
+					$aportante->setPhoneMobile(trim($_POST["phoneMobile"][$i]));
+                    $aportante->setEmail(trim($_POST["email"][$i]));
                     $aportante->setIsActive('true');
-                    $aportante->setOriginProvince($_POST["originProvince"][$i]);
-					$aportante->setOriginCity($_POST["originCity"][$i]);
+                    $aportante->setOriginProvince(trim($_POST["originProvince"][$i]));
+					$aportante->setOriginCity(trim($_POST["originCity"][$i]));
                     
 					
                     $save=$aportante->save(); // Manda a guardar la moto en el modelo
@@ -115,12 +115,12 @@ class BandejaAdminsController extends ControladorBase{
         {
             $aportante=new Aportante($this->adapter);
             $aportante->setAportanteID($_POST["idE"]);
-            $aportante->setCedula($_POST["cedulaE"]);
-            $aportante->setNames($_POST["namesE"]);
-            $aportante->setLastnames($_POST["lastnamesE"]);
-            $aportante->setPhoneHome($_POST["phoneHomeE"]);
-			$aportante->setPhoneMobile($_POST["phoneMobileE"]);
-			$aportante->setEmail($_POST["emailE"]);
+            $aportante->setCedula(trim($_POST["cedulaE"]));
+            $aportante->setNames(trim($_POST["namesE"]));
+            $aportante->setLastnames(trim($_POST["lastnamesE"]));
+            $aportante->setPhoneHome(trim($_POST["phoneHomeE"]));
+			$aportante->setPhoneMobile(trim($_POST["phoneMobileE"]));
+			$aportante->setEmail(trim($_POST["emailE"]));
             $save=$aportante->update(); // Manda a actualizar la moto en el modelo
             if ($save == TRUE)
                     {
@@ -158,9 +158,9 @@ class BandejaAdminsController extends ControladorBase{
             {
                 $aporte=new Aporte($this->adapter);
                 $aporte->setAporteID($_POST["idxE"]);
-			    $aporte->setValue($_POST["valueE"]);
-                $aporte->setBank($_POST["bankE"]);
-                $aporte->setAccount($_POST["accountE"]);
+			    $aporte->setValue(trim($_POST["valueE"]));
+                $aporte->setBank(trim($_POST["bankE"]));
+                $aporte->setAccount(trim($_POST["accountE"]));
                 $aporte->setTransactionID($valx);
             
                 $save=$aporte->update(); // Manda a actualizar la moto en el modelo
@@ -215,10 +215,10 @@ class BandejaAdminsController extends ControladorBase{
                 )
                 {
                     $aporte->setAportanteID($_POST["aportanteID"]);
-                    $aporte->setValue($_POST["value"]);
+                    $aporte->setValue(trim($_POST["value"]));
                     $aporte->setType('T');
-                    $aporte->setBank($_POST["bank"]);
-                    $aporte->setAccount($_POST["account"]);
+                    $aporte->setBank(trim($_POST["bank"]));
+                    $aporte->setAccount(trim($_POST["account"]));
                     $aporte->setTransactionID('0');
                     $aporte->setRegisteredDate(date("Y-m-d H:i:s", time()));
                     $aporte->setBankValidated('false');

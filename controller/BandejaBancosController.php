@@ -223,9 +223,9 @@ class BandejaBancosController extends ControladorBase{
             {
                 $aporte=new Aporte($this->adapter);
                 $aporte->setAporteID($_POST["idxE"]);
-                $aporte->setValue($_POST["valueE"]);
-                $aporte->setBank($_POST["bankE"]);
-                $aporte->setAccount($_POST["accountE"]);
+                $aporte->setValue(trim($_POST["valueE"]));
+                $aporte->setBank(trim($_POST["bankE"]));
+                $aporte->setAccount(trim($_POST["accountE"]));
                 $aporte->setTransactionID($valx);
                 
                 $save=$aporte->update(); // Manda a actualizar la moto en el modelo

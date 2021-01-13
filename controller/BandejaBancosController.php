@@ -135,14 +135,17 @@ class BandejaBancosController extends ControladorBase{
 		
 		if ($r > 0)
 		{
-			if ($row[5]!= 'Depósito' && $row[5]!= 'Nota de Débito')
+			if (trim($row[5])== 'NCA' || trim($row[5])== 'Depósito' || trim($row[5])== 'DEPOSITO')
 			{
 				$fecha = substr($row[3], 0, 19) ;
 				$fecha = str_replace(".",":",$fecha);
 				$fecha = substr_replace($fecha, " ", 10, 1);
 					//echo $fecha.':'.$row[5].'|||'.$fecha .'<br/>';
-					
-				$aporte=new Aporte($this->adapter);
+                $save = false;
+                $estado = 'true';
+                if (trim($row[5])== 'NCA')
+                {
+                    $aporte=new Aporte($this->adapter);
 				$aporte->setTransactionID($row[4]);
 				$aporte->setBank($row[14]);
 				$aporte->setRegisteredDate($fecha);
@@ -150,6 +153,13 @@ class BandejaBancosController extends ControladorBase{
 				$aporte->setAccount($row[13]);
 				
 				$save=$aporte->updateCruce(); // Manda a actualizar la moto en el modelo
+
+                }
+                else
+                {
+                    $estado = 'false';
+                }
+				
 				if ($save == TRUE)
 				{
 					$act = $act+1;
@@ -166,7 +176,7 @@ class BandejaBancosController extends ControladorBase{
 				$payment->setAccount($row[13]);
 				$payment->setRegisteredDate($fecha);
 				$payment->setIsMatched('false');
-                $payment->setIsActive('true');
+                $payment->setIsActive($estado);
                 $payment->setFullname($row[11]);
 				$save=$payment->save();
 				}
@@ -174,7 +184,7 @@ class BandejaBancosController extends ControladorBase{
 					//echo 'Excepción capturada: ',  $e->getMessage(), "\n";
 				}
 				
-			}
+			} // end if columna F = tipo transacción
 		
 		}
 		}

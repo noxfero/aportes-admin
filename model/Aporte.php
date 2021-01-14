@@ -141,7 +141,8 @@ class Aporte extends EntidadBase{
 
     //Actualiza los datos de la moto
     public function update(){
-        $query="UPDATE aporte SET value='$this->value', bank='$this->bank', account='$this->account', \"transactionId\"='$this->transactionID' WHERE \"aporteID\"='$this->aporteID'";
+        //$query="UPDATE aporte SET value='$this->value', bank='$this->bank', account='$this->account', \"transactionId\"='$this->transactionID' WHERE \"aporteID\"='$this->aporteID'";
+        $query="UPDATE aporte SET value='$this->value', bank='$this->bank', account='$this->account' WHERE \"aporteID\"='$this->aporteID'";
         $save=$this->db()->query($query);
         //$this->db()->error;
         return $save;

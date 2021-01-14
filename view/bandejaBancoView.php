@@ -167,7 +167,7 @@
 						<td><input type="text" name="valueE" value="'.$aporte->value.'" class="form-control" /></td>
 						<td><input type="text" name="bankE" value="'.$aporte->bank.'" class="form-control" /></td>
                         <td><input type="text" name="accountE" value="'.$aporte->account.'" class="form-control"/></td>
-						<td><input type="text" name="transactionE" value="'.$aporte->transactionID.'" class="form-control"/></td>
+						<td>'.$aporte->transactionID.'</td>
                         <td>'.$aporte->registeredDate.'</td>
                      <td>'.$aporte->bankValidated.'</td>
                         <td class="right">

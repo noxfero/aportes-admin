@@ -171,7 +171,8 @@ class Aporte extends EntidadBase{
 	//Obetiene las citas con estado dado el id de usuario 
     public function getMisAportes($col,$estado){
         $query=$this->db()->query("SELECT aporte.\"aporteID\", aportante.cedula ||  ' - ' || aportante.names || ' ' || aportante.lastnames as \"aportanteID\", aporte.value,
-aporte.bank, aporte.account, aporte.\"transactionId\" as \"transactionID\", aporte.\"registeredDate\",
+        aporte.bank, aporte.account, aporte.\"transactionId\" as \"transactionID\", aporte.\"registeredDate\",
+        aportante.\"phoneHome\" ||  ' - ' || aportante.\"phoneMobile\" || ' - ' || aportante.email as \"type\", 
         CASE 
         WHEN (aporte.\"bankValidated\" = 'true') THEN 'SI' 
         WHEN (aporte.\"bankValidated\" = 'false') THEN 'AUN NO' ELSE 'N/A' END AS \"bankValidated\",
@@ -201,7 +202,7 @@ aporte.bank, aporte.account, aporte.\"transactionId\" as \"transactionID\", apor
 	//Obetiene las citas con estado dado el id de usuario 
     public function getMisAportesLimit($col,$estado,$order,$offset){
         $query=$this->db()->query("SELECT aporte.\"aporteID\", aportante.cedula ||  ' - ' || aportante.names || ' ' || aportante.lastnames as \"aportanteID\", aporte.value,
-aporte.bank, aporte.account, aporte.\"transactionId\" as \"transactionID\", aporte.\"registeredDate\",
+        aporte.bank, aporte.account, aporte.\"transactionId\" as \"transactionID\", aporte.\"registeredDate\",
         CASE 
         WHEN (aporte.\"bankValidated\" = 'true') THEN 'SI' 
         WHEN (aporte.\"bankValidated\" = 'false') THEN 'AUN NO' ELSE 'N/A' END AS \"bankValidated\",
@@ -229,6 +230,8 @@ aporte.bank, aporte.account, aporte.\"transactionId\" as \"transactionID\", apor
         }
     }
 
+
+    
     //Obetiene las citas con estado dado el id de usuario 
     public function getAportesPorCedula($cedula){
         $query=$this->db()->query("SELECT aporte.\"aporteID\", 

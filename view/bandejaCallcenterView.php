@@ -99,6 +99,7 @@
                   <tr>
                     <th scope="col">Aporte</th>
                     <th scope="col">Aportante</th>
+                    <th scope="col">Contacto</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Banco</th>
                     <th scope="col">Cuenta</th>
@@ -125,7 +126,8 @@
                     {
                     echo '<tr><th scope="row">'.$aporte->aporteID.'</th>
                     <td>'.$aporte->aportanteID.'</td>
-					<td>'.$aporte->value.'</td>
+                    <td>'.$aporte->type.'</td>
+                    <td>'.$aporte->value.'</td>
                      <td>'.$aporte->bank.'</td>
                      <td>'.$aporte->account.'</td>
                      <td>'.$aporte->transactionID.'</td>
@@ -138,7 +140,8 @@
                     else{ //Carga los controles input necesarios para la edición
 					echo '<tr><th scope="row">'.$aporte->aporteID.'</th>
                         <td>'.$aporte->aportanteID.'</td>
-						<td><input type="text" name="valueE" value="'.$aporte->value.'" class="form-control" /></td>
+                        <td>'.$aporte->type.'</td>
+                        <td><input type="text" name="valueE" value="'.$aporte->value.'" class="form-control" /></td>
 						<td><input type="text" name="bankE" value="'.$aporte->bank.'" class="form-control" /></td>
                         <td><input type="text" name="accountE" value="'.$aporte->account.'" class="form-control"/></td>
 						<td><input type="text" name="transactionE" value="'.$aporte->transactionId.'" class="form-control"/></td>
@@ -155,8 +158,8 @@
                 <input  type="hidden" name="idxE" value="'.$idUpd.'"/>';
             } else { echo "No tiene aún aportes regsitrados.<br/><br/>";} 
 				echo '<input  type="hidden" name="tab1" value="'.$tab1.'"/>
-				<button name="paginar1a"  type="submit" class="btn btn-success"  style="display:'.$display1a.'">Anteriores</button>
-                 <button name="paginar1b"  type="submit" class="btn btn-success" style="display:'.$display1b.'">Siguientes</button>';
+				<button name="paginar1a"  type="submit" class="btn btn-success"  style="display:none">Anteriores</button>
+                 <button name="paginar1b"  type="submit" class="btn btn-success" style="display:none">Siguientes</button>';
             ?>
         </section>
 		</form>
@@ -208,6 +211,7 @@
                   <tr>
                     <th scope="col">Aporte</th>
                     <th scope="col">Aportante</th>
+                    <th scope="col">Contacto</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Banco</th>
                     <th scope="col">Cuenta</th>
@@ -241,6 +245,7 @@
                         }
                     echo '<tr><th scope="row">'.$aporte->aporteID.'</th>
                     <td>'.$aporte->aportanteID.'</td>
+                    <td>'.$aporte->type.'</td>
 					<td>'.$aporte->value.'</td>
                      <td>'.$aporte->bank.'</td>
                      <td>'.$aporte->account.'</td>
@@ -257,6 +262,7 @@
                     else{ //Carga los controles input necesarios para la edición
 					echo '<tr><th scope="row">'.$aporte->aporteID.'</th>
                         <td>'.$aporte->aportanteID.'</td>
+                        <td>'.$aporte->type.'</td>
 						<td>'.$aporte->value.'<input type="hidden" name="aporteIDx" value="'.$aporte->aporteID.'" class="form-control" /></td>
 						<td>'.$aporte->bank.'<input type="hidden" name="aportanteIDx" value="'.$aporte->aportanteID.'" class="form-control" /></td>
                         <td>'.$aporte->account.'<input type="hidden" name="isActivex" value="'.$aporte->isActive.'" class="form-control"/></td>

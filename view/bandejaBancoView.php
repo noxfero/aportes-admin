@@ -181,8 +181,8 @@
                 <input  type="hidden" name="idxE" value="'.$idUpd.'"/>';
             } else { echo "No tiene aún aportes regsitrados.<br/><br/>";} 
 				echo '<input  type="hidden" name="tab1" value="'.$tab1.'"/>
-				<button name="paginar1a"  type="submit" class="btn btn-success"  style="display:'.$display1a.'">Anteriores</button>
-                 <button name="paginar1b"  type="submit" class="btn btn-success" style="display:'.$display1b.'">Siguientes</button>';
+				<button name="paginar1a"  type="submit" class="btn btn-success"  style="display:none">Anteriores</button>
+                 <button name="paginar1b"  type="submit" class="btn btn-success" style="display:none">Siguientes</button>';
             ?>
         </section>
 		</form>

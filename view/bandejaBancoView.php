@@ -77,10 +77,13 @@
 		<br/>&nbsp;<br/>
       
 		<br/>&nbsp;<br/>
+        <form action="<?php echo $helper->url("BandejaBancos","exportarExcel"); ?>" method="post" class="col-sm-12 justify-content-center">
         <div class="col-sm-12">
 			<h3>APORTES - Registrados (Pendientes cruzar con el banco)</h3>
-            <hr/>
+            <input type="submit" value="Exportar Reporte Pendientes a Excel" class="btn btn-info" name="registrar"/>
+            <input  type="hidden" name="estadoEx" value="0"/>
         </div>
+        </form>
 		<form action="<?php echo $helper->url("BandejaBancos","editarAporte"); ?>" method="post" class="col-sm-12 justify-content-center">
         <section class="col-sm-12 moto">
             <?php 
@@ -191,10 +194,14 @@
 		</form>
 		<br/>&nbsp;<br/>
 		<br/>&nbsp;<br/>
+        <form action="<?php echo $helper->url("BandejaBancos","exportarExcel"); ?>" method="post" class="col-sm-12 justify-content-center">
         <div class="col-sm-12">
 			<h3>APORTES - Validados (Cruzados con el banco)</h3>
+            <input type="submit" value="Exportar Reporte Validados a Excel" class="btn btn-info" name="registrar"/>
+            <input  type="hidden" name="estadoEx" value="1"/>
             <hr/>
         </div>
+        </form>
 		
 		<form action="<?php echo $helper->url("BandejaBancos","enviarCorreo"); ?>" method="post" class="col-sm-12 justify-content-center">
         <section class="col-sm-12 moto">

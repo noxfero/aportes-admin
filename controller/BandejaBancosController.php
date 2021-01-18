@@ -55,6 +55,63 @@ class BandejaBancosController extends ControladorBase{
         ));
         
     }
+
+    public function exportarExcel(){
+        $aportex=new Aporte($this->adapter);
+        $allMisAportes1=$aportex->getMisAportes('"bankValidated"',$_POST["estadoEx"]);
+        //$aportex->phpAlert("Empezando",$this->baseUrl("BandejaBancos", "index"));
+        $file_ending = "xls";
+        $nombreArchivo="Default";
+        if ($_POST["estadoEx"]=='0')
+        {
+            $nombreArchivo = "AportesPendientesValidar";
+        }
+        else if ($_POST["estadoEx"]=='1')
+        {
+            $nombreArchivo = "AportesValidadosPorBanco";
+        } 
+        //header info for browser
+        
+        header("Content-Type: application/xls");    
+        header("Content-Disposition: attachment; filename=".$nombreArchivo.".xls");
+        header("Pragma: no-cache"); 
+        header("Expires: 0");
+
+        echo '<table class="table" border="1">
+                <thead>
+                  <tr>
+                    <th scope="col">Aporte</th>
+                    <th scope="col">Aportante</th>
+                    <th scope="col">Contacto</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Banco</th>
+                    <th scope="col">Cuenta</th>
+                    <th scope="col">Transaccion</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Validada Banco</th>
+                    <th scope="col">Correo enviado</th>
+                  </tr>
+                </thead>
+                <tbody>';
+
+        foreach($allMisAportes1 as $aporte) {
+            echo '<tr><th scope="row">'.$aporte->aporteID.'</th>
+            <td>'.$aporte->aportanteID.'</td>
+            <td>'.$aporte->type.'</td>
+            <td>'.$aporte->value.'</td>
+             <td>'.$aporte->bank.'</td>
+             <td>'.$aporte->account.'</td>
+             <td>'.$aporte->transactionID.'</td>
+             <td>'.$aporte->registeredDate.'</td>
+             <td>'.$aporte->bankValidated.'</td>
+             <td>'.$aporte->callCenterValidated.'</td>
+             </tr>'; 
+        } 
+        $aportex->phpAlert("Se supone que generé el excel",$this->baseUrl("BandejaBancos", "index")); // Alerta y redirige
+        
+        
+        
+    }
     
     //Registra N motos pasados desde el contendeor dinámico de la vista mediante arrays
     public function agregaAportantes(){

@@ -135,7 +135,7 @@
                     <th scope="col">Transacción</th>
                     <th scope="col">Fecha</th>
 					<th scope="col">Validada Banco</th>
-                    <th scope="col"></th>
+                    <th scope="col"> Editar - (ForT) Transferencia - (ForD) Depósito</th>
                   </tr>
                 </thead>
                 <tbody>';
@@ -162,8 +162,10 @@
                      <td>'.$aporte->transactionID.'</td>
 					 <td>'.$aporte->registeredDate.'</td>
                      <td>'.$aporte->bankValidated.'</td>
-                    <td class="right">
+                    <td class="right" style="width:150px;">
                     <a name="editar" href="'.$dir.'&idx='.$aporte->aporteID.'&datosx='.$aporte->value.' - '.$aporte->bank.' - '.$aporte->account.'" class="btn btn-info">Editar</a>
+                    <a name="formulario" href="'.'https://aportes.andresarauz.ec/api/v1/pdf/formulario/'.$aporte->aporteID.'" class="btn btn-primary">ForT</a>
+                    <a name="formulario" href="'.'https://aportes.andresarauz.ec/api/v1/pdf/formulariod/'.$aporte->aporteID.'" class="btn btn-warning">ForD</a>
 					</td></tr>'; 
 					}
                     else{ //Carga los controles input necesarios para la edición
@@ -421,7 +423,7 @@
         
         <footer class="col-sm-12 text-center">
             <hr/>
-            Administrador de Aportes - Unión por la Esperanza | Copyright &copy; <?php echo  date("Y"); ?>
+            Administrador de Aportes - Unión por la Esperanza | Copyleft &copy; <?php echo  date("Y"); ?>
 		   <br/><br/>
         </footer>
 		</div>

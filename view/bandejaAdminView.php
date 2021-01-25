@@ -370,7 +370,7 @@
         
         <footer class="col-sm-12 text-center">
             <hr/>
-            Administrador de Aportes - Unión por la Esperanza | Copyright &copy; <?php echo  date("Y"); ?>
+            Administrador de Aportes - Unión por la Esperanza | Copyleft &copy; <?php echo  date("Y"); ?>
 		   <br/><br/>
         </footer>
 		</div>
